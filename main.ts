@@ -40,8 +40,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     sprite.destroy(effects.disintegrate, 500)
     info.changeScoreBy(10)
 })
-let BossShip: Sprite = null
 let Asteroid: Sprite = null
+let BossShip: Sprite = null
 let projectile: Sprite = null
 let mySprite: Sprite = null
 game.showLongText("STAR RAIDERS - Press A to start", DialogLayout.Center)
@@ -68,6 +68,11 @@ mySprite.setPosition(76, 111)
 controller.moveSprite(mySprite, 100, 0)
 mySprite.setStayInScreen(true)
 info.startCountdown(60)
+game.onUpdateInterval(randint(5000, 15000), function () {
+    BossShip = sprites.create(assets.image`BossShip`, SpriteKind.BossShip)
+    BossShip.setPosition(scene.screenWidth(), 13)
+    BossShip.vx = -80
+})
 game.onUpdateInterval(1000, function () {
     if (1 == randint(1, 2)) {
         Asteroid = sprites.createProjectileFromSide(img`
@@ -110,9 +115,4 @@ game.onUpdateInterval(1000, function () {
     }
     Asteroid.x = randint(0, scene.screenWidth())
     Asteroid.setKind(SpriteKind.Enemy)
-})
-game.onUpdateInterval(10000, function () {
-    BossShip = sprites.create(assets.image`BossShip`, SpriteKind.BossShip)
-    BossShip.setPosition(scene.screenWidth(), 13)
-    BossShip.vx = -80
 })
